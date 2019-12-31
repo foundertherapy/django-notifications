@@ -12,7 +12,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.query import QuerySet
 from django.utils import timezone
-from jsonfield.fields import JSONField
+import django.contrib.postgres.fields
 from model_utils import Choices
 from notifications import settings as notifications_settings
 from notifications.signals import notify
@@ -203,7 +203,7 @@ class Notification(models.Model):
     deleted = models.BooleanField(default=False, db_index=True)
     emailed = models.BooleanField(default=False, db_index=True)
 
-    data = JSONField(blank=True, null=True)
+    data = django.contrib.postgres.fields.JSONField(blank=True, null=True)
     uuid = models.UUIDField(db_index=True, default=uuid.uuid4)
 
     objects = NotificationQuerySet.as_manager()
